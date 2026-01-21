@@ -1,0 +1,58 @@
+variable "application_gateways" {
+  type = map(object({
+    application_gateway_name = string
+    resource_group_name      = string
+    location                 = string
+    subnet_name              = string
+    virtual_network_name     = string
+    public_ip_name           = string
+
+
+    sku_name     = string
+    sku_tier     = string
+    sku_capacity = number
+
+
+    gateway_ip_configuration = list(object({
+      name = string
+
+    }))
+
+    frontend_port = list(object({
+      name = string
+      port = number
+    }))
+    frontend_ip_configuration = list(object({
+      name = string
+    }))
+    backend_address_pool = list(object({
+      name = string
+    }))
+    backend_http_settings = list(object({
+      name                  = string
+      cookie_based_affinity = string
+      path                  = string
+      port                  = number
+      protocol              = string
+      request_timeout       = number
+    }))
+    http_listener = list(object({
+      name                           = string
+      frontend_ip_configuration_name = string
+      frontend_port_name             = string
+      protocol                       = string
+
+    }))
+    request_routing_rule = list(object({
+      name                       = string,
+      priority                   = number,
+      rule_type                  = string,
+      http_listener_name         = string,
+      backend_address_pool_name  = string,
+      backend_http_settings_name = string,
+
+    }))
+
+  }))
+
+}
