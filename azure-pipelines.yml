@@ -43,7 +43,6 @@ stages:
             targetType: 'inline'
             script: 'tflint'
   - stage: infracost
-    dependsOn: initandfmt
     jobs:
       - job: infracost
         displayName: infracost before apply
