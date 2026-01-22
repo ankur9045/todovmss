@@ -2,9 +2,9 @@ trigger : none
 pool: vmss_agent
 stages:
   - stage: initandfmt
-    displayName: init and fmt
+    displayName: init and validate
     jobs:
-      - job: infracodeinitfmt
+      - job: initandvalidate
         displayName: initjob
         steps:
         - task: TerraformInstaller@1
@@ -15,6 +15,7 @@ stages:
             provider: 'azurerm'
             command: 'init'
             workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
+            backendServiceArm: 'Azure subscription 1(f47d98c3-f2af-4f15-988e-80b41b9098b8)'
             backendAzureRmStorageAccountName: 'mysg'
             backendAzureRmContainerName: 'mycon'
             backendAzureRmKey: 'terraform.state'
