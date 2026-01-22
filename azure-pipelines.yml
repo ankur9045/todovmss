@@ -1,0 +1,25 @@
+trigger : none
+pool: vmss_agent
+stages:
+  - stage: initandfmt
+    displayName: init and fmt
+    jobs:
+      - job: infracodeinitfmt
+        displayName: initjob
+        steps:
+        - task: TerraformInstaller@1
+          inputs:
+            terraformVersion: 'latest'
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
+            backendAzureRmStorageAccountName: 'mysg'
+            backendAzureRmContainerName: 'mycon'
+            backendAzureRmKey: 'terraform.state'
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'validate'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
