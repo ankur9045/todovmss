@@ -11,6 +11,7 @@ stages:
           inputs:
             terraformVersion: 'latest'
         - task: TerraformTask@5
+          displayName: terraform init
           inputs:
             provider: 'azurerm'
             command: 'init'
@@ -20,6 +21,7 @@ stages:
             backendAzureRmContainerName: 'mycon'
             backendAzureRmKey: 'terraform.state'
         - task: TerraformTask@5
+          displayName: terraform validate
           inputs:
             provider: 'azurerm'
             command: 'validate'
@@ -31,10 +33,12 @@ stages:
         displayName: scanning tool
         steps:
         - task: PowerShell@2
+          displayName: tfsec
           inputs:
             targetType: 'inline'
             script: 'tfsec'
         - task: PowerShell@2
+          displayName: tflint
           inputs:
             targetType: 'inline'
             script: 'tflint'
@@ -45,6 +49,10 @@ stages:
         displayName: infracost before apply
         steps:
         - task: PowerShell@2
+          displayName: terracost
           inputs:
             targetType: 'inline'
-            script: '''infracost breakdown --path=.  --terraform-var-file terraform.tfvars'''
+            script: |
+              "C:\Tool\infracost.exe" breakdown
+              --path$(System.DefaultWorkingDirectory)/dev `
+              --format table
