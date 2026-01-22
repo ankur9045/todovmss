@@ -53,6 +53,6 @@ stages:
           inputs:
             targetType: 'inline'
             script: |
-              "C:\Tool\infracost.exe" breakdown
-              --path$(System.DefaultWorkingDirectory)/dev `
-              --format table
+               & "C:\Tool\infracost.exe" breakdown `
+                 --path "$(System.DefaultWorkingDirectory)/dev" `
+                 --format table
