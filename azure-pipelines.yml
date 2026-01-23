@@ -27,6 +27,7 @@ stages:
             command: 'validate'
             workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
   - stage: tfsec
+    dependsOn: initandfmt
     displayName: tfsec&tflint
     jobs:
       - job: scanningtool
@@ -48,6 +49,7 @@ stages:
               errorActionPreference: 'continue'        
               workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
   - stage: infracost
+    dependsOn: initandfmt
     jobs:
       - job: infracost
         displayName: infracost before apply
