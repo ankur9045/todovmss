@@ -43,7 +43,6 @@ stages:
           inputs:
             targetType: 'inline'
             script: |
-              winget install TerraformLinters.tflint     
               ls   
               tflint
               errorActionPreference: 'continue'        
