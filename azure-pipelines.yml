@@ -44,8 +44,7 @@ stages:
             targetType: 'inline'
             script: |
               ls   
-              tflint
-              errorActionPreference: 'continue'        
+              tflint        
               workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
   - stage: infracost
     dependsOn: initandfmt
