@@ -51,7 +51,7 @@ stages:
               ls
 
               Write-Host "Running tflint:"
-              tflint
+              tflint -force
 
   - stage: infracost
     jobs:
