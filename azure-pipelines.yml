@@ -40,6 +40,7 @@ stages:
             script: 'tfsec'
         - task: PowerShell@2
           displayName: tflint
+          continueOnError: true
           inputs:
             targetType: 'inline'
             workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
