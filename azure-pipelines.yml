@@ -63,6 +63,6 @@ stages:
           displayName: terracost
           inputs:
             targetType: 'inline'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
             script: |
-              'infracost breakdown --path=.'
-              workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
+              infracost breakdown --path=.
