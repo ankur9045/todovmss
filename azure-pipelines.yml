@@ -41,7 +41,12 @@ stages:
           displayName: tflint
           inputs:
             targetType: 'inline'
-            script: 'tflint'
+            script: |
+              winget install TerraformLinters.tflint     
+              ls   
+              tflint
+              errorActionPreference: 'continue'        
+              workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
   - stage: infracost
     jobs:
       - job: infracost
@@ -52,6 +57,5 @@ stages:
           inputs:
             targetType: 'inline'
             script: |
-               & "C:\Tool\infracost.exe" breakdown `
-                 --path "$(System.DefaultWorkingDirectory)/dev" `
-                 --format table
+              'infracost breakdown --path=.'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
