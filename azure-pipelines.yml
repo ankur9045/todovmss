@@ -60,9 +60,10 @@ stages:
         displayName: infracost before apply
         steps:
         - task: PowerShell@2
-          displayName: terracost
+          displayName: infracost
           inputs:
-            targetType: 'inline'
+            targetType: inline
             workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
             script: |
+              $env:INFRACOST_API_KEY = "$(INFRACOST_API_KEY)"  # ensure variable is passed
               infracost breakdown --path=.
