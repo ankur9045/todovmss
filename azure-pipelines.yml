@@ -42,12 +42,18 @@ stages:
           displayName: tflint
           inputs:
             targetType: 'inline'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
             script: |
-              ls   
-              tflint        
-              workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
+              Write-Host "Current dir:"
+              pwd
+
+              Write-Host "Files:"
+              ls
+
+              Write-Host "Running tflint:"
+              tflint
+
   - stage: infracost
-    dependsOn: initandfmt
     jobs:
       - job: infracost
         displayName: infracost before apply
