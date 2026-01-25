@@ -59,11 +59,24 @@ stages:
       - job: infracost
         displayName: infracost before apply
         steps:
+        - task: TerraformTask@5
+          displayName: terraform init
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
+            backendServiceArm: 'Azure subscription 1(f47d98c3-f2af-4f15-988e-80b41b9098b8)'
+            backendAzureRmStorageAccountName: 'mysg'
+            backendAzureRmContainerName: 'mycon'
+            backendAzureRmKey: 'terraform.state'
         - task: PowerShell@2
           displayName: infracost
           inputs:
             targetType: inline
-            workingDirectory: '$(System.DefaultWorkingDirectory)'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
             script: |
               $env:INFRACOST_API_KEY = "$(INFRACOST_API_KEY)"  # ensure variable is passed
-              infracost breakdown --path=.
+              terraform plan -out=tfplan
+              terraform show -json tfplan > plan.json
+              infracost breakdown --path plan.json
+              
